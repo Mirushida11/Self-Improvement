@@ -23,10 +23,297 @@
             color: #f5f5f5;
         }
 
+        body.auth-body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+            margin: 20px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #f0f0f0;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .dark-mode .form-group input {
+            background: #3d3d3d;
+            border-color: #555;
+            color: white;
+        }
+
+        .dark-mode .form-group label {
+            color: #f5f5f5;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .message.success {
+            background: #c6f6d5;
+            color: #22543d;
+            display: block;
+        }
+
+        .message.error {
+            background: #fed7d7;
+            color: #742a2a;
+            display: block;
+        }
+
+        .message.info {
+            background: #bee3f8;
+            color: #2c5282;
+            display: block;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .password-strength-bar.weak {
+            width: 33.33%;
+            background-color: #f56565;
+        }
+
+        .password-strength-bar.medium {
+            width: 66.66%;
+            background-color: #ecc94b;
+        }
+
+        .password-strength-bar.strong {
+            width: 100%;
+            background-color: #48bb78;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .main-content {
+            display: none;
+        }
+
+        .main-content.show {
+            display: block;
+        }
+
+        .user-info {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .user-info {
+            background: #2d2d2d;
+        }
+
+        .user-email {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .logout-btn {
+            background: #f56565;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c53030;
         }
 
         header {
@@ -35,6 +322,14 @@
             align-items: center;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode header {
+            background: #2d2d2d;
         }
 
         h1 {
@@ -287,17 +582,6 @@
             color: white;
         }
 
-        .progress-view {
-            background: #f0f0f0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .dark-mode .progress-view {
-            background: #3d3d3d;
-        }
-
         .progress-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -310,6 +594,7 @@
             padding: 15px;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .dark-mode .stat-card {
@@ -320,6 +605,7 @@
             font-size: 1.5rem;
             font-weight: bold;
             color: #667eea;
+            margin: 10px 0;
         }
 
         .workout-details {
@@ -338,6 +624,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .view-section {
@@ -348,6 +635,19 @@
             display: block;
         }
 
+        .save-btn {
+            background: #48bb78;
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .save-btn:hover {
+            background: #38a169;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -356,126 +656,216 @@
             .habit-section {
                 flex-direction: column;
             }
+            
+            .user-info {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
         }
     </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>🌟 Self Improvement Tracker</h1>
-            <button class="theme-toggle" onclick="toggleTheme()">Switch to Dark Mode</button>
-        </header>
-
-        <div class="toggle-buttons">
-            <button onclick="showSection('tracker')">Daily Tracker</button>
-            <button onclick="showSection('progress')">View Progress</button>
+<body class="auth-body">
+    <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container">
+        <div class="logo">
+            <h1>🌟 Self Improvement</h1>
+            <p>Track your journey to a better you</p>
         </div>
 
-        <!-- Daily Tracker Section -->
-        <div id="tracker-section" class="view-section active">
-            <!-- Prayer Section -->
-            <div class="section">
-                <h2>🕌 Daily Prayers</h2>
-                <div class="prayer-grid">
-                    <div class="prayer-item">
-                        <input type="checkbox" id="fajr" onchange="savePrayers()">
-                        <label for="fajr">Fajr</label>
-                        <input type="time" class="schedule-input" id="fajr-time" onchange="saveSchedule()">
-                    </div>
-                    <div class="prayer-item">
-                        <input type="checkbox" id="dhuhr" onchange="savePrayers()">
-                        <label for="dhuhr">Dhuhr</label>
-                        <input type="time" class="schedule-input" id="dhuhr-time" onchange="saveSchedule()">
-                    </div>
-                    <div class="prayer-item">
-                        <input type="checkbox" id="asr" onchange="savePrayers()">
-                        <label for="asr">Asr</label>
-                        <input type="time" class="schedule-input" id="asr-time" onchange="saveSchedule()">
-                    </div>
-                    <div class="prayer-item">
-                        <input type="checkbox" id="maghrib" onchange="savePrayers()">
-                        <label for="maghrib">Maghrib</label>
-                        <input type="time" class="schedule-input" id="maghrib-time" onchange="saveSchedule()">
-                    </div>
-                    <div class="prayer-item">
-                        <input type="checkbox" id="isha" onchange="savePrayers()">
-                        <label for="isha">Isha</label>
-                        <input type="time" class="schedule-input" id="isha-time" onchange="saveSchedule()">
+        <!-- Tab Buttons -->
+        <div class="tab-buttons">
+            <button class="tab-button active" onclick="switchTab('login')" id="login-tab">Login</button>
+            <button class="tab-button" onclick="switchTab('signup')" id="signup-tab">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="auth-form active">
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <div class="forgot-password">
+                    <a onclick="resetPassword(event)">Forgot Password?</a>
+                </div>
+                <button type="submit" class="submit-btn" id="login-btn">Login</button>
+            </form>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div id="signup-form" class="auth-form">
+            <form onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required onkeyup="checkPasswordStrength()">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a password" required onkeyup="checkPasswordStrength()">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="password-strength-bar"></div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Workout Section with Specific Exercises -->
-            <div class="section">
-                <h2>💪 Workout Planner</h2>
-                <div class="workout-container" id="workout-container">
-                    <!-- Workout days will be dynamically generated here -->
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="Confirm your password" required>
                 </div>
-                <button onclick="saveAllWorkouts()">Save All Workouts</button>
+                <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
+            </form>
+        </div>
+
+        <!-- Message Display -->
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Main Content (Tracker) -->
+    <div id="main-content" class="main-content">
+        <div class="container">
+            <div class="user-info">
+                <span class="user-email" id="user-email"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
 
-            <!-- Habit Tracker Section -->
-            <div class="section">
-                <h2>🚫 Bad Habit Tracker</h2>
-                <div class="habit-section">
-                    <div class="habit-input">
-                        <input type="text" id="bad-habit" placeholder="Enter habit to stop (e.g., smoking)">
-                        <button onclick="setHabit()">Set Habit</button>
-                    </div>
-                    <div style="flex: 2;">
-                        <div class="counter" id="habit-counter">0</div>
-                        <p style="text-align: center;" id="habit-name">No habit set</p>
-                        <div style="text-align: center;">
-                            <button onclick="incrementHabit()">+1 Day Successful</button>
-                            <button onclick="resetHabit()">Reset Counter</button>
+            <header>
+                <h1>🌟 Self Improvement Tracker</h1>
+                <button class="theme-toggle" onclick="toggleTheme()">Switch to Dark Mode</button>
+            </header>
+
+            <div class="toggle-buttons">
+                <button onclick="showSection('tracker')">Daily Tracker</button>
+                <button onclick="showSection('progress')">View Progress</button>
+                <button onclick="saveAllToCloud()" style="background: #48bb78;">☁️ Save to Cloud</button>
+            </div>
+
+            <!-- Daily Tracker Section -->
+            <div id="tracker-section" class="view-section active">
+                <!-- Prayer Section -->
+                <div class="section">
+                    <h2>🕌 Daily Prayers</h2>
+                    <div class="prayer-grid">
+                        <div class="prayer-item">
+                            <input type="checkbox" id="fajr" onchange="savePrayers()">
+                            <label for="fajr">Fajr</label>
+                            <input type="time" class="schedule-input" id="fajr-time" onchange="saveSchedule()">
+                        </div>
+                        <div class="prayer-item">
+                            <input type="checkbox" id="dhuhr" onchange="savePrayers()">
+                            <label for="dhuhr">Dhuhr</label>
+                            <input type="time" class="schedule-input" id="dhuhr-time" onchange="saveSchedule()">
+                        </div>
+                        <div class="prayer-item">
+                            <input type="checkbox" id="asr" onchange="savePrayers()">
+                            <label for="asr">Asr</label>
+                            <input type="time" class="schedule-input" id="asr-time" onchange="saveSchedule()">
+                        </div>
+                        <div class="prayer-item">
+                            <input type="checkbox" id="maghrib" onchange="savePrayers()">
+                            <label for="maghrib">Maghrib</label>
+                            <input type="time" class="schedule-input" id="maghrib-time" onchange="saveSchedule()">
+                        </div>
+                        <div class="prayer-item">
+                            <input type="checkbox" id="isha" onchange="savePrayers()">
+                            <label for="isha">Isha</label>
+                            <input type="time" class="schedule-input" id="isha-time" onchange="saveSchedule()">
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Sleep and Nutrition Section -->
-            <div class="section">
-                <h2>😴 Sleep & Nutrition</h2>
-                <div class="sleep-tracker">
-                    <div class="sleep-input">
-                        <label>Hours of Sleep:</label>
-                        <input type="number" id="sleep-hours" min="0" max="24" step="0.5" onchange="saveSleep()">
+                <!-- Workout Section with Specific Exercises -->
+                <div class="section">
+                    <h2>💪 Workout Planner</h2>
+                    <div class="workout-container" id="workout-container">
+                        <!-- Workout days will be dynamically generated here -->
                     </div>
-                    <div class="sleep-input">
-                        <label>Ate Well Today?</label>
-                        <div>
-                            <input type="radio" name="nutrition" id="ate-yes" value="yes" onchange="saveNutrition()">
-                            <label for="ate-yes">Yes</label>
-                            <input type="radio" name="nutrition" id="ate-no" value="no" onchange="saveNutrition()">
-                            <label for="ate-no">No</label>
+                    <button onclick="saveAllWorkouts()">Save All Workouts</button>
+                </div>
+
+                <!-- Habit Tracker Section -->
+                <div class="section">
+                    <h2>🚫 Bad Habit Tracker</h2>
+                    <div class="habit-section">
+                        <div class="habit-input">
+                            <input type="text" id="bad-habit" placeholder="Enter habit to stop (e.g., smoking)">
+                            <button onclick="setHabit()">Set Habit</button>
+                        </div>
+                        <div style="flex: 2;">
+                            <div class="counter" id="habit-counter">0</div>
+                            <p style="text-align: center;" id="habit-name">No habit set</p>
+                            <div style="text-align: center;">
+                                <button onclick="incrementHabit()">+1 Day Successful</button>
+                                <button onclick="resetHabit()">Reset Counter</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button onclick="saveDaily()">Save Today's Progress</button>
-            </div>
-        </div>
 
-        <!-- Progress View Section -->
-        <div id="progress-section" class="view-section">
-            <div class="section">
-                <h2>📊 Your Progress</h2>
-                <div class="progress-stats" id="progress-stats">
-                    <!-- Progress stats will be populated here -->
+                <!-- Sleep and Nutrition Section -->
+                <div class="section">
+                    <h2>😴 Sleep & Nutrition</h2>
+                    <div class="sleep-tracker">
+                        <div class="sleep-input">
+                            <label>Hours of Sleep:</label>
+                            <input type="number" id="sleep-hours" min="0" max="24" step="0.5" onchange="saveSleep()">
+                        </div>
+                        <div class="sleep-input">
+                            <label>Ate Well Today?</label>
+                            <div>
+                                <input type="radio" name="nutrition" id="ate-yes" value="yes" onchange="saveNutrition()">
+                                <label for="ate-yes">Yes</label>
+                                <input type="radio" name="nutrition" id="ate-no" value="no" onchange="saveNutrition()">
+                                <label for="ate-no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="save-btn" onclick="saveDaily()">💾 Save Today's Progress</button>
+                </div>
+            </div>
+
+            <!-- Progress View Section -->
+            <div id="progress-section" class="view-section">
+                <div class="section">
+                    <h2>📊 Your Progress</h2>
+                    <div class="progress-stats" id="progress-stats">
+                        <!-- Progress stats will be populated here -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize local storage
-        let progressData = JSON.parse(localStorage.getItem('progressData')) || [];
-        let currentHabit = localStorage.getItem('currentHabit') || '';
-        let habitCount = parseInt(localStorage.getItem('habitCount')) || 0;
-        let prayers = JSON.parse(localStorage.getItem('prayers')) || {};
-        let schedule = JSON.parse(localStorage.getItem('schedule')) || {};
-        
-        // Initialize workouts data structure
-        let workouts = JSON.parse(localStorage.getItem('workouts')) || {
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAuckVHMtOGg4VDE3r_0FDN1yxLEf-v_rI",
+            authDomain: "selfimprovementtracker-d327a.firebaseapp.com",
+            projectId: "selfimprovementtracker-d327a",
+            storageBucket: "selfimprovementtracker-d327a.firebasestorage.app",
+            messagingSenderId: "847984738135",
+            appId: "1:847984738135:web:f76d218e2f0d23fe1bc812"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Global variables for tracker data
+        let currentUser = null;
+        let progressData = [];
+        let currentHabit = '';
+        let habitCount = 0;
+        let prayers = {};
+        let schedule = {};
+        let workouts = {
             monday: { checked: false, exercises: [''] },
             tuesday: { checked: false, exercises: [''] },
             wednesday: { checked: false, exercises: [''] },
@@ -495,313 +885,272 @@
             { id: 'sunday', label: 'Sunday' }
         ];
 
-        // Load saved data on page load
-        window.onload = function() {
+        // Check if user is already logged in
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                showMainContent(user);
+                await loadUserData(user.uid);
+                initializeTracker();
+            } else {
+                showAuthContent();
+            }
+        });
+
+        // Initialize tracker with loaded data
+        function initializeTracker() {
+            renderWorkoutPlanner();
             loadPrayers();
             loadSchedule();
-            renderWorkoutPlanner();
             loadHabit();
             loadTheme();
             loadSleep();
             loadNutrition();
             updateProgressView();
-        };
+        }
 
-        // Theme toggle
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const button = document.querySelector('.theme-toggle');
-            if (document.body.classList.contains('dark-mode')) {
-                button.textContent = 'Switch to Light Mode';
-                localStorage.setItem('theme', 'dark');
+        // Authentication Functions
+        function switchTab(tab) {
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const message = document.getElementById('message');
+
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                signupTab.classList.remove('active');
+                loginForm.classList.add('active');
+                signupForm.classList.remove('active');
             } else {
-                button.textContent = 'Switch to Dark Mode';
-                localStorage.setItem('theme', 'light');
+                signupTab.classList.add('active');
+                loginTab.classList.remove('active');
+                signupForm.classList.add('active');
+                loginForm.classList.remove('active');
             }
-        }
-
-        function loadTheme() {
-            const theme = localStorage.getItem('theme');
-            if (theme === 'dark') {
-                document.body.classList.add('dark-mode');
-                document.querySelector('.theme-toggle').textContent = 'Switch to Light Mode';
-            }
-        }
-
-        // Section toggle
-        function showSection(section) {
-            document.getElementById('tracker-section').classList.remove('active');
-            document.getElementById('progress-section').classList.remove('active');
             
-            if (section === 'tracker') {
-                document.getElementById('tracker-section').classList.add('active');
-            } else {
-                document.getElementById('progress-section').classList.add('active');
-                updateProgressView();
-            }
+            message.style.display = 'none';
+            message.className = 'message';
         }
 
-        // Prayer functions
-        function savePrayers() {
-            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            prayerIds.forEach(id => {
-                prayers[id] = document.getElementById(id).checked;
-            });
-            localStorage.setItem('prayers', JSON.stringify(prayers));
-        }
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const loginBtn = document.getElementById('login-btn');
+            const message = document.getElementById('message');
 
-        function loadPrayers() {
-            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            prayerIds.forEach(id => {
-                if (prayers[id] !== undefined) {
-                    document.getElementById(id).checked = prayers[id];
+            loginBtn.innerHTML = '<span class="loading-spinner"></span>Logging in...';
+            loginBtn.disabled = true;
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                showMessage('Login successful!', 'success');
+            } catch (error) {
+                let errorMessage = 'Login failed. ';
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage += 'No account found with this email.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage += 'Incorrect password.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage += 'Invalid email address.';
+                        break;
+                    default:
+                        errorMessage += error.message;
                 }
-            });
-        }
-
-        // Schedule functions
-        function saveSchedule() {
-            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            prayerIds.forEach(id => {
-                schedule[id] = document.getElementById(id + '-time').value;
-            });
-            localStorage.setItem('schedule', JSON.stringify(schedule));
-        }
-
-        function loadSchedule() {
-            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-            prayerIds.forEach(id => {
-                if (schedule[id]) {
-                    document.getElementById(id + '-time').value = schedule[id];
-                }
-            });
-        }
-
-        // Enhanced Workout functions
-        function renderWorkoutPlanner() {
-            const container = document.getElementById('workout-container');
-            container.innerHTML = '';
-
-            daysOfWeek.forEach(day => {
-                const dayData = workouts[day.id] || { checked: false, exercises: [''] };
-                
-                const card = document.createElement('div');
-                card.className = 'workout-day-card';
-                card.innerHTML = `
-                    <div class="workout-day-header">
-                        <input type="checkbox" id="${day.id}" ${dayData.checked ? 'checked' : ''} onchange="toggleWorkoutDay('${day.id}')">
-                        <label for="${day.id}">${day.label}</label>
-                    </div>
-                    <div class="workout-exercises" id="exercises-${day.id}">
-                        ${renderExercises(day.id, dayData.exercises)}
-                    </div>
-                    <button class="add-exercise-btn" onclick="addExercise('${day.id}')">+ Add Exercise</button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function renderExercises(dayId, exercises) {
-            let html = '';
-            exercises.forEach((exercise, index) => {
-                html += `
-                    <div class="exercise-item">
-                        <input type="text" id="${dayId}-exercise-${index}" value="${exercise || ''}" placeholder="e.g., Bench Press 3x10" onchange="updateExercise('${dayId}', ${index}, this.value)">
-                        ${exercises.length > 1 ? `<button class="remove-exercise-btn" onclick="removeExercise('${dayId}', ${index})">✕</button>` : ''}
-                    </div>
-                `;
-            });
-            return html;
-        }
-
-        function toggleWorkoutDay(dayId) {
-            const checkbox = document.getElementById(dayId);
-            workouts[dayId].checked = checkbox.checked;
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-        }
-
-        function addExercise(dayId) {
-            if (!workouts[dayId].exercises) {
-                workouts[dayId].exercises = [];
-            }
-            workouts[dayId].exercises.push('');
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-            renderWorkoutPlanner();
-        }
-
-        function removeExercise(dayId, index) {
-            workouts[dayId].exercises.splice(index, 1);
-            if (workouts[dayId].exercises.length === 0) {
-                workouts[dayId].exercises = [''];
-            }
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-            renderWorkoutPlanner();
-        }
-
-        function updateExercise(dayId, index, value) {
-            workouts[dayId].exercises[index] = value;
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-        }
-
-        function saveAllWorkouts() {
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-            alert('All workouts saved!');
-        }
-
-        // Habit functions
-        function setHabit() {
-            const habitInput = document.getElementById('bad-habit');
-            if (habitInput.value) {
-                currentHabit = habitInput.value;
-                localStorage.setItem('currentHabit', currentHabit);
-                document.getElementById('habit-name').textContent = `Stopping: ${currentHabit}`;
-                habitInput.value = '';
+                showMessage(errorMessage, 'error');
+                loginBtn.innerHTML = 'Login';
+                loginBtn.disabled = false;
             }
         }
 
-        function incrementHabit() {
-            if (currentHabit) {
-                habitCount++;
-                localStorage.setItem('habitCount', habitCount);
-                document.getElementById('habit-counter').textContent = habitCount;
-            } else {
-                alert('Please set a habit first!');
-            }
-        }
-
-        function resetHabit() {
-            habitCount = 0;
-            localStorage.setItem('habitCount', habitCount);
-            document.getElementById('habit-counter').textContent = habitCount;
-        }
-
-        function loadHabit() {
-            if (currentHabit) {
-                document.getElementById('habit-name').textContent = `Stopping: ${currentHabit}`;
-                document.getElementById('habit-counter').textContent = habitCount;
-            }
-        }
-
-        // Sleep and nutrition functions
-        function saveSleep() {
-            const sleepHours = document.getElementById('sleep-hours').value;
-            localStorage.setItem('sleepHours', sleepHours);
-        }
-
-        function loadSleep() {
-            const sleepHours = localStorage.getItem('sleepHours');
-            if (sleepHours) {
-                document.getElementById('sleep-hours').value = sleepHours;
-            }
-        }
-
-        function saveNutrition() {
-            const nutrition = document.querySelector('input[name="nutrition"]:checked');
-            if (nutrition) {
-                localStorage.setItem('nutrition', nutrition.value);
-            }
-        }
-
-        function loadNutrition() {
-            const nutrition = localStorage.getItem('nutrition');
-            if (nutrition) {
-                document.getElementById(`ate-${nutrition}`).checked = true;
-            }
-        }
-
-        // Save daily progress
-        function saveDaily() {
-            const today = new Date().toLocaleDateString();
-            const sleepHours = document.getElementById('sleep-hours').value;
-            const nutrition = document.querySelector('input[name="nutrition"]:checked')?.value;
+        async function handleSignUp(event) {
+            event.preventDefault();
             
-            const dailyProgress = {
-                date: today,
-                prayers: {...prayers},
-                workouts: JSON.parse(JSON.stringify(workouts)), // Deep copy
-                habit: {
-                    name: currentHabit,
-                    count: habitCount
-                },
-                sleep: sleepHours,
-                nutrition: nutrition
-            };
-            
-            progressData.push(dailyProgress);
-            localStorage.setItem('progressData', JSON.stringify(progressData));
-            alert('Progress saved for ' + today);
-        }
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const signupBtn = document.getElementById('signup-btn');
+            const message = document.getElementById('message');
 
-        // Update progress view
-        function updateProgressView() {
-            const statsDiv = document.getElementById('progress-stats');
-            if (progressData.length === 0) {
-                statsDiv.innerHTML = '<p>No progress data yet. Start tracking today!</p>';
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match!', 'error');
                 return;
             }
 
-            const last7Days = progressData.slice(-7);
-            let statsHTML = '';
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters long!', 'error');
+                return;
+            }
 
-            last7Days.forEach(day => {
-                const prayersCompleted = Object.values(day.prayers).filter(Boolean).length;
+            signupBtn.innerHTML = '<span class="loading-spinner"></span>Creating account...';
+            signupBtn.disabled = true;
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 
-                // Count days with workouts checked
-                let workoutDays = 0;
-                let workoutDetails = [];
-                if (day.workouts) {
-                    Object.entries(day.workouts).forEach(([dayName, dayData]) => {
-                        if (dayData.checked) {
-                            workoutDays++;
-                            const exercises = dayData.exercises.filter(ex => ex.trim() !== '');
-                            if (exercises.length > 0) {
-                                workoutDetails.push(`
-                                    <div style="margin-top: 5px;">
-                                        <strong>${dayName}:</strong>
-                                        <ul style="margin: 5px 0 5px 20px;">
-                                            ${exercises.map(ex => `<li>${ex}</li>`).join('')}
-                                        </ul>
-                                    </div>
-                                `);
-                            }
-                        }
-                    });
+                await db.collection('users').doc(userCredential.user.uid).set({
+                    email: email,
+                    createdAt: new Date().toISOString(),
+                    settings: {
+                        theme: 'light'
+                    }
+                });
+
+                showMessage('Account created successfully!', 'success');
+            } catch (error) {
+                let errorMessage = 'Sign up failed. ';
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage += 'This email is already registered.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage += 'Invalid email address.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage += 'Password is too weak.';
+                        break;
+                    default:
+                        errorMessage += error.message;
+                }
+                showMessage(errorMessage, 'error');
+                signupBtn.innerHTML = 'Create Account';
+                signupBtn.disabled = false;
+            }
+        }
+
+        async function resetPassword(event) {
+            event.preventDefault();
+            
+            const email = prompt('Please enter your email address:');
+            if (!email) return;
+
+            try {
+                await auth.sendPasswordResetEmail(email);
+                showMessage('Password reset email sent! Check your inbox.', 'success');
+            } catch (error) {
+                showMessage('Error sending reset email: ' + error.message, 'error');
+            }
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('signup-password').value;
+            const strengthBar = document.getElementById('password-strength-bar');
+            
+            strengthBar.className = 'password-strength-bar';
+            
+            if (password.length === 0) {
+                strengthBar.style.width = '0';
+                return;
+            }
+            
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            if (strength <= 2) {
+                strengthBar.classList.add('weak');
+            } else if (strength <= 4) {
+                strengthBar.classList.add('medium');
+            } else {
+                strengthBar.classList.add('strong');
+            }
+        }
+
+        function showMessage(text, type) {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = 'message ' + type;
+        }
+
+        function showMainContent(user) {
+            document.body.classList.remove('auth-body');
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('main-content').classList.add('show');
+            document.getElementById('user-email').textContent = user.email;
+        }
+
+        function showAuthContent() {
+            document.body.classList.add('auth-body');
+            document.getElementById('auth-container').style.display = 'block';
+            document.getElementById('main-content').classList.remove('show');
+        }
+
+        async function logout() {
+            try {
+                await auth.signOut();
+                showMessage('Logged out successfully', 'info');
+            } catch (error) {
+                showMessage('Error logging out: ' + error.message, 'error');
+            }
+        }
+
+        // Data loading from Firestore
+        async function loadUserData(userId) {
+            try {
+                // Load tracker data
+                const trackerDoc = await db.collection('trackerData').doc(userId).get();
+                if (trackerDoc.exists) {
+                    const data = trackerDoc.data();
+                    
+                    // Load all saved data
+                    if (data.progressData) progressData = data.progressData;
+                    if (data.currentHabit) currentHabit = data.currentHabit;
+                    if (data.habitCount) habitCount = data.habitCount;
+                    if (data.prayers) prayers = data.prayers;
+                    if (data.schedule) schedule = data.schedule;
+                    if (data.workouts) workouts = data.workouts;
+                    if (data.sleepHours) localStorage.setItem('sleepHours', data.sleepHours);
+                    if (data.nutrition) localStorage.setItem('nutrition', data.nutrition);
+                    if (data.theme) {
+                        localStorage.setItem('theme', data.theme);
+                        if (data.theme === 'dark') document.body.classList.add('dark-mode');
+                    }
                 }
                 
-                statsHTML += `
-                    <div class="stat-card">
-                        <h3>${day.date}</h3>
-                        <div class="stat-value">${prayersCompleted}/5 Prayers</div>
-                        <div>Workout Days: ${workoutDays}/7</div>
-                        ${workoutDetails.length > 0 ? `
-                            <div class="workout-details">
-                                <strong>Workout Details:</strong>
-                                ${workoutDetails.join('')}
-                            </div>
-                        ` : ''}
-                        <div>Sleep: ${day.sleep || '-'} hours</div>
-                        <div>Nutrition: ${day.nutrition || '-'}</div>
-                        <div>Habit streak: ${day.habit?.count || 0} days</div>
-                    </div>
-                `;
-            });
-
-            // Add summary stats
-            const totalPrayers = progressData.reduce((sum, day) => 
-                sum + Object.values(day.prayers).filter(Boolean).length, 0);
-            const avgPrayers = (totalPrayers / progressData.length).toFixed(1);
-
-            statsHTML = `
-                <div class="stat-card">
-                    <h3>Overall Stats</h3>
-                    <div class="stat-value">${avgPrayers}/5</div>
-                    <div>Avg. Daily Prayers</div>
-                    <div>Days Tracked: ${progressData.length}</div>
-                </div>
-            ` + statsHTML;
-
-            statsDiv.innerHTML = statsHTML;
+                // Load user settings
+                const userDoc = await db.collection('users').doc(userId).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    if (userData.settings && userData.settings.theme === 'dark') {
+                        document.body.classList.add('dark-mode');
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
         }
-    </script>
-</body>
-</html>
+
+        // Save all data to Firestore
+        async function saveAllToCloud() {
+            if (!currentUser) return;
+            
+            try {
+                const dataToSave = {
+                    progressData: progressData,
+                    currentHabit: currentHabit,
+                    habitCount: habitCount,
+                    prayers: prayers,
+                    schedule: schedule,
+                    workouts: workouts,
+                    sleepHours: document.getElementById('sleep-hours').value,
+                    nutrition: document.querySelector('input[name="nutrition"]:checked')?.value,
+                    theme: localStorage.getItem('theme'),
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                await db.collection('trackerData').doc(currentUser.uid).set(dataToSave, { merge: true });
+                showMessage('All data saved to cloud!', 'success');
+            } catch (error) {
+                console.error('Error saving to cloud:', error);
+                showMessage('Error saving to cloud: ' + error.message, 'error');
+           
