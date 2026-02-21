@@ -412,7 +412,7 @@
 
         .workout-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin: 15px 0;
         }
@@ -432,7 +432,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .workout-day-header input[type="checkbox"] {
@@ -443,25 +443,30 @@
 
         .workout-day-header label {
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            color: #667eea;
         }
 
         .workout-exercises {
             margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
         }
 
         .exercise-item {
             display: flex;
             align-items: center;
-            gap: 5px;
-            margin-top: 5px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .exercise-item input {
             flex: 1;
-            padding: 8px;
+            padding: 8px 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 0.95rem;
         }
 
         .dark-mode .exercise-item input {
@@ -474,11 +479,16 @@
             background: #48bb78;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 8px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.9rem;
-            margin-top: 10px;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .add-exercise-btn:hover {
+            background: #38a169;
         }
 
         .remove-exercise-btn {
@@ -489,6 +499,11 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 0.9rem;
+            min-width: 35px;
+        }
+
+        .remove-exercise-btn:hover {
+            background: #c53030;
         }
 
         .habit-section {
@@ -593,10 +608,12 @@
             padding: 20px;
             border-radius: 10px;
             text-align: center;
+            border: 1px solid #e0e0e0;
         }
 
         .dark-mode .stat-card {
             background: #3d3d3d;
+            border-color: #555;
         }
 
         .stat-value {
@@ -615,6 +632,15 @@
 
         .dark-mode .workout-details {
             border-top-color: #555;
+        }
+
+        .workout-details ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .workout-details li {
+            margin: 3px 0;
         }
 
         .toggle-buttons {
@@ -791,7 +817,7 @@
                 <div class="section">
                     <h2>💪 Workout Planner</h2>
                     <div class="workout-container" id="workout-container"></div>
-                    <button onclick="saveAllWorkouts()">Save All Workouts</button>
+                    <button onclick="saveAllWorkouts()" style="background: #48bb78; margin-top: 20px;">💾 Save All Workouts</button>
                 </div>
 
                 <!-- Habit Tracker Section -->
@@ -878,15 +904,7 @@
         let habitCount = parseInt(localStorage.getItem('habitCount')) || 0;
         let prayers = JSON.parse(localStorage.getItem('prayers')) || {};
         let schedule = JSON.parse(localStorage.getItem('schedule')) || {};
-        let workouts = JSON.parse(localStorage.getItem('workouts')) || {
-            monday: { checked: false, exercises: [''] },
-            tuesday: { checked: false, exercises: [''] },
-            wednesday: { checked: false, exercises: [''] },
-            thursday: { checked: false, exercises: [''] },
-            friday: { checked: false, exercises: [''] },
-            saturday: { checked: false, exercises: [''] },
-            sunday: { checked: false, exercises: [''] }
-        };
+        let workouts = {};
 
         const daysOfWeek = [
             { id: 'monday', label: 'Monday' },
@@ -913,6 +931,7 @@
         // Initialize tracker
         window.onload = function() {
             console.log('Page loaded');
+            loadWorkouts();
             renderWorkoutPlanner();
             loadPrayers();
             loadSchedule();
@@ -920,6 +939,7 @@
             loadTheme();
             loadSleep();
             loadNutrition();
+            updateProgressView();
         };
 
         // Authentication Functions
@@ -1094,6 +1114,11 @@
             const message = document.getElementById('message');
             message.textContent = text;
             message.className = 'message ' + type;
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
         }
 
         function showMainContent(user) {
@@ -1157,9 +1182,15 @@
                     loadSleep();
                     loadNutrition();
                     renderWorkoutPlanner();
+                } else {
+                    // If no data in cloud, initialize with defaults
+                    initializeDefaultWorkouts();
+                    renderWorkoutPlanner();
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
+                initializeDefaultWorkouts();
+                renderWorkoutPlanner();
             }
         }
 
@@ -1169,6 +1200,18 @@
                 showMessage('You must be logged in to save to cloud', 'error');
                 return;
             }
+
+            // Make sure all current workout inputs are captured
+            daysOfWeek.forEach(day => {
+                if (workouts[day.id] && workouts[day.id].exercises) {
+                    workouts[day.id].exercises.forEach((_, index) => {
+                        const input = document.getElementById(`${day.id}-exercise-${index}`);
+                        if (input) {
+                            workouts[day.id].exercises[index] = input.value;
+                        }
+                    });
+                }
+            });
 
             const dataToSave = {
                 progressData: progressData,
@@ -1268,20 +1311,42 @@
             container.innerHTML = '';
 
             daysOfWeek.forEach(day => {
-                const dayData = workouts[day.id] || { checked: false, exercises: [''] };
+                if (!workouts[day.id]) {
+                    workouts[day.id] = { checked: false, exercises: [''] };
+                }
+                
+                const dayData = workouts[day.id];
                 
                 const card = document.createElement('div');
                 card.className = 'workout-day-card';
                 
                 let exercisesHtml = '';
-                dayData.exercises.forEach((exercise, index) => {
-                    exercisesHtml += `
+                if (dayData.exercises && dayData.exercises.length > 0) {
+                    dayData.exercises.forEach((exercise, index) => {
+                        const exerciseValue = exercise || '';
+                        exercisesHtml += `
+                            <div class="exercise-item">
+                                <input type="text" 
+                                       id="${day.id}-exercise-${index}" 
+                                       value="${exerciseValue.replace(/"/g, '&quot;')}" 
+                                       placeholder="e.g., Bench Press 3x10" 
+                                       onchange="updateExercise('${day.id}', ${index}, this.value)">
+                                ${dayData.exercises.length > 1 ? `<button class="remove-exercise-btn" onclick="removeExercise('${day.id}', ${index})">✕</button>` : ''}
+                            </div>
+                        `;
+                    });
+                } else {
+                    exercisesHtml = `
                         <div class="exercise-item">
-                            <input type="text" id="${day.id}-exercise-${index}" value="${exercise || ''}" placeholder="e.g., Bench Press 3x10" onchange="updateExercise('${day.id}', ${index}, this.value)">
-                            ${dayData.exercises.length > 1 ? `<button class="remove-exercise-btn" onclick="removeExercise('${day.id}', ${index})">✕</button>` : ''}
+                            <input type="text" 
+                                   id="${day.id}-exercise-0" 
+                                   value="" 
+                                   placeholder="e.g., Bench Press 3x10" 
+                                   onchange="updateExercise('${day.id}', 0, this.value)">
                         </div>
                     `;
-                });
+                    workouts[day.id].exercises = [''];
+                }
                 
                 card.innerHTML = `
                     <div class="workout-day-header">
@@ -1295,15 +1360,22 @@
                 `;
                 container.appendChild(card);
             });
+            
+            localStorage.setItem('workouts', JSON.stringify(workouts));
         }
 
         function toggleWorkoutDay(dayId) {
             const checkbox = document.getElementById(dayId);
-            workouts[dayId].checked = checkbox.checked;
-            localStorage.setItem('workouts', JSON.stringify(workouts));
+            if (checkbox) {
+                workouts[dayId].checked = checkbox.checked;
+                localStorage.setItem('workouts', JSON.stringify(workouts));
+            }
         }
 
         function addExercise(dayId) {
+            if (!workouts[dayId]) {
+                workouts[dayId] = { checked: false, exercises: [] };
+            }
             if (!workouts[dayId].exercises) {
                 workouts[dayId].exercises = [];
             }
@@ -1313,22 +1385,128 @@
         }
 
         function removeExercise(dayId, index) {
-            workouts[dayId].exercises.splice(index, 1);
-            if (workouts[dayId].exercises.length === 0) {
-                workouts[dayId].exercises = [''];
+            if (workouts[dayId] && workouts[dayId].exercises) {
+                workouts[dayId].exercises.splice(index, 1);
+                if (workouts[dayId].exercises.length === 0) {
+                    workouts[dayId].exercises = [''];
+                }
+                localStorage.setItem('workouts', JSON.stringify(workouts));
+                renderWorkoutPlanner();
             }
-            localStorage.setItem('workouts', JSON.stringify(workouts));
-            renderWorkoutPlanner();
         }
 
         function updateExercise(dayId, index, value) {
+            if (!workouts[dayId]) {
+                workouts[dayId] = { checked: false, exercises: [] };
+            }
+            if (!workouts[dayId].exercises) {
+                workouts[dayId].exercises = [];
+            }
+            while (workouts[dayId].exercises.length <= index) {
+                workouts[dayId].exercises.push('');
+            }
             workouts[dayId].exercises[index] = value;
             localStorage.setItem('workouts', JSON.stringify(workouts));
         }
 
         function saveAllWorkouts() {
+            daysOfWeek.forEach(day => {
+                if (workouts[day.id] && workouts[day.id].exercises) {
+                    workouts[day.id].exercises.forEach((_, index) => {
+                        const input = document.getElementById(`${day.id}-exercise-${index}`);
+                        if (input) {
+                            workouts[day.id].exercises[index] = input.value;
+                        }
+                    });
+                }
+            });
+            
             localStorage.setItem('workouts', JSON.stringify(workouts));
-            showMessage('All workouts saved!', 'success');
+            showMessage('All workouts saved successfully!', 'success');
+        }
+
+        function loadWorkouts() {
+            const savedWorkouts = localStorage.getItem('workouts');
+            if (savedWorkouts) {
+                try {
+                    workouts = JSON.parse(savedWorkouts);
+                    console.log('Loaded workouts from localStorage:', workouts);
+                } catch (e) {
+                    console.error('Error parsing workouts:', e);
+                    initializeDefaultWorkouts();
+                }
+            } else {
+                initializeDefaultWorkouts();
+            }
+        }
+
+        function initializeDefaultWorkouts() {
+            workouts = {
+                monday: { 
+                    checked: false, 
+                    exercises: [
+                        'Bicep curls – 3×10',
+                        'Hammer curls – 3×10',
+                        'Reverse curls – 3×10',
+                        'Tricep extension – 3×10',
+                        'Skull crushers – 3×10',
+                        'Dumbbell shoulder press',
+                        'Lateral raises – 3×12'
+                    ] 
+                },
+                tuesday: { 
+                    checked: false, 
+                    exercises: [
+                        'Bulgarian split squats – 3×8',
+                        'Squats – 4×8',
+                        'Calf raises – 3×12',
+                        'Romanian Deadlift',
+                        'Wall sit – 1 min × 3',
+                        'Jump squats (optional)'
+                    ] 
+                },
+                wednesday: { 
+                    checked: false, 
+                    exercises: [
+                        'Push-ups – 3×12',
+                        'Dips – 3×8',
+                        'Floor bench press – 3×8',
+                        'Decline push-ups – 3×10',
+                        'Incline push-ups – 3×10',
+                        'Chest fly with dumbbells – 3×12'
+                    ] 
+                },
+                thursday: { 
+                    checked: false, 
+                    exercises: [
+                        'Sit-ups – 20×3',
+                        'Leg raises – 12×3',
+                        'Plank – 1 min × 3',
+                        'Crunches – 20×3',
+                        'Russian twists – 20×3'
+                    ] 
+                },
+                friday: { 
+                    checked: false, 
+                    exercises: [
+                        'Bent-over rows – 4×8',
+                        'Dumbbell lat pull (single arm)',
+                        'Deadlift – 3×8',
+                        'Face pulls',
+                        'Rear delt raises – 3×12'
+                    ] 
+                },
+                saturday: { 
+                    checked: false, 
+                    exercises: ['Rest or light cardio'] 
+                },
+                sunday: { 
+                    checked: false, 
+                    exercises: ['Rest day'] 
+                }
+            };
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+            console.log('Initialized default workouts');
         }
 
         // Habit functions
@@ -1400,6 +1578,18 @@
             const sleepHours = document.getElementById('sleep-hours').value;
             const nutrition = document.querySelector('input[name="nutrition"]:checked')?.value;
             
+            // Capture current workout data
+            daysOfWeek.forEach(day => {
+                if (workouts[day.id] && workouts[day.id].exercises) {
+                    workouts[day.id].exercises.forEach((_, index) => {
+                        const input = document.getElementById(`${day.id}-exercise-${index}`);
+                        if (input) {
+                            workouts[day.id].exercises[index] = input.value;
+                        }
+                    });
+                }
+            });
+            
             const dailyProgress = {
                 date: today,
                 prayers: {...prayers},
@@ -1439,11 +1629,11 @@
                     Object.entries(day.workouts).forEach(([dayName, dayData]) => {
                         if (dayData.checked) {
                             workoutDays++;
-                            const exercises = dayData.exercises.filter(ex => ex && ex.trim() !== '');
+                            const exercises = dayData.exercises.filter(ex => ex && ex.trim() !== '' && ex !== 'Rest day' && ex !== 'Rest or light cardio');
                             if (exercises.length > 0) {
                                 workoutDetails.push(`
                                     <div style="margin-top: 10px;">
-                                        <strong>${dayName}:</strong>
+                                        <strong>${dayName.charAt(0).toUpperCase() + dayName.slice(1)}:</strong>
                                         <ul style="margin: 5px 0 5px 20px;">
                                             ${exercises.map(ex => `<li>${ex}</li>`).join('')}
                                         </ul>
