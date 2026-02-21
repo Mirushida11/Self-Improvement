@@ -65,7 +65,7 @@
         }
 
         .logo h1 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -74,7 +74,7 @@
 
         .logo p {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .tab-buttons {
@@ -134,7 +134,7 @@
             margin-bottom: 8px;
             color: #333;
             font-weight: 500;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .form-group input {
@@ -214,6 +214,7 @@
         .forgot-password {
             text-align: right;
             margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         .forgot-password a {
@@ -445,21 +446,6 @@
             font-size: 1.1rem;
         }
 
-        .workout-input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        .dark-mode .workout-input {
-            background: #2d2d2d;
-            border-color: #555;
-            color: white;
-        }
-
         .workout-exercises {
             margin-top: 10px;
         }
@@ -473,9 +459,9 @@
 
         .exercise-item input {
             flex: 1;
-            padding: 5px;
+            padding: 8px;
             border: 1px solid #ddd;
-            border-radius: 3px;
+            border-radius: 5px;
         }
 
         .dark-mode .exercise-item input {
@@ -488,21 +474,21 @@
             background: #48bb78;
             color: white;
             border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
+            padding: 8px 12px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 0.8rem;
-            margin-top: 5px;
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
 
         .remove-exercise-btn {
             background: #f56565;
             color: white;
             border: none;
-            padding: 5px 8px;
-            border-radius: 3px;
+            padding: 8px 12px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .habit-section {
@@ -546,7 +532,7 @@
         }
 
         .counter {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #667eea;
             text-align: center;
@@ -571,9 +557,10 @@
         }
 
         .sleep-input input[type="number"] {
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 1rem;
         }
 
         .dark-mode .sleep-input input {
@@ -582,37 +569,47 @@
             color: white;
         }
 
+        .nutrition-options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nutrition-options input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
         .progress-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
 
         .stat-card {
-            background: white;
-            padding: 15px;
+            background: #f8f9fa;
+            padding: 20px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .dark-mode .stat-card {
-            background: #2d2d2d;
+            background: #3d3d3d;
         }
 
         .stat-value {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
             color: #667eea;
             margin: 10px 0;
         }
 
         .workout-details {
-            font-size: 0.9rem;
             text-align: left;
-            margin-top: 10px;
-            padding-top: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid #ddd;
         }
 
@@ -637,15 +634,23 @@
 
         .save-btn {
             background: #48bb78;
-            margin-top: 20px;
             width: 100%;
             padding: 15px;
             font-size: 1.1rem;
             font-weight: bold;
+            margin-top: 20px;
         }
 
         .save-btn:hover {
             background: #38a169;
+        }
+
+        .cloud-save-btn {
+            background: #4299e1;
+        }
+
+        .cloud-save-btn:hover {
+            background: #3182ce;
         }
 
         @media (max-width: 768px) {
@@ -662,6 +667,12 @@
                 gap: 10px;
                 text-align: center;
             }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
         }
     </style>
     <!-- Firebase SDK -->
@@ -673,7 +684,7 @@
     <!-- Authentication Container -->
     <div id="auth-container" class="auth-container">
         <div class="logo">
-            <h1>🌟 Self Improvement</h1>
+            <h1>Self Improvement</h1>
             <p>Track your journey to a better you</p>
         </div>
 
@@ -685,42 +696,38 @@
 
         <!-- Login Form -->
         <div id="login-form" class="auth-form active">
-            <form onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label for="login-email">Email</label>
-                    <input type="email" id="login-email" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="Enter your password" required>
-                </div>
-                <div class="forgot-password">
-                    <a onclick="resetPassword(event)">Forgot Password?</a>
-                </div>
-                <button type="submit" class="submit-btn" id="login-btn">Login</button>
-            </form>
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" placeholder="Enter your password">
+            </div>
+            <div class="forgot-password">
+                <a onclick="resetPassword()">Forgot Password?</a>
+            </div>
+            <button class="submit-btn" onclick="handleLogin()" id="login-btn">Login</button>
         </div>
 
         <!-- Sign Up Form -->
         <div id="signup-form" class="auth-form">
-            <form onsubmit="handleSignUp(event)">
-                <div class="form-group">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" placeholder="Enter your email" required onkeyup="checkPasswordStrength()">
+            <div class="form-group">
+                <label for="signup-email">Email</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" onkeyup="checkPasswordStrength()">
+            </div>
+            <div class="form-group">
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" placeholder="Create a password" onkeyup="checkPasswordStrength()">
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="password-strength-bar"></div>
                 </div>
-                <div class="form-group">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" placeholder="Create a password" required onkeyup="checkPasswordStrength()">
-                    <div class="password-strength">
-                        <div class="password-strength-bar" id="password-strength-bar"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" id="confirm-password" placeholder="Confirm your password" required>
-                </div>
-                <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
-            </form>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm your password">
+            </div>
+            <button class="submit-btn" onclick="handleSignUp()" id="signup-btn">Create Account</button>
         </div>
 
         <!-- Message Display -->
@@ -743,7 +750,7 @@
             <div class="toggle-buttons">
                 <button onclick="showSection('tracker')">Daily Tracker</button>
                 <button onclick="showSection('progress')">View Progress</button>
-                <button onclick="saveAllToCloud()" style="background: #48bb78;">☁️ Save to Cloud</button>
+                <button class="cloud-save-btn" onclick="saveAllToCloud()">☁️ Save to Cloud</button>
             </div>
 
             <!-- Daily Tracker Section -->
@@ -780,12 +787,10 @@
                     </div>
                 </div>
 
-                <!-- Workout Section with Specific Exercises -->
+                <!-- Workout Section -->
                 <div class="section">
                     <h2>💪 Workout Planner</h2>
-                    <div class="workout-container" id="workout-container">
-                        <!-- Workout days will be dynamically generated here -->
-                    </div>
+                    <div class="workout-container" id="workout-container"></div>
                     <button onclick="saveAllWorkouts()">Save All Workouts</button>
                 </div>
 
@@ -818,11 +823,15 @@
                         </div>
                         <div class="sleep-input">
                             <label>Ate Well Today?</label>
-                            <div>
-                                <input type="radio" name="nutrition" id="ate-yes" value="yes" onchange="saveNutrition()">
-                                <label for="ate-yes">Yes</label>
-                                <input type="radio" name="nutrition" id="ate-no" value="no" onchange="saveNutrition()">
-                                <label for="ate-no">No</label>
+                            <div class="nutrition-options">
+                                <div>
+                                    <input type="radio" name="nutrition" id="ate-yes" value="yes" onchange="saveNutrition()">
+                                    <label for="ate-yes">Yes</label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="nutrition" id="ate-no" value="no" onchange="saveNutrition()">
+                                    <label for="ate-no">No</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -834,9 +843,7 @@
             <div id="progress-section" class="view-section">
                 <div class="section">
                     <h2>📊 Your Progress</h2>
-                    <div class="progress-stats" id="progress-stats">
-                        <!-- Progress stats will be populated here -->
-                    </div>
+                    <div class="progress-stats" id="progress-stats"></div>
                 </div>
             </div>
         </div>
@@ -854,18 +861,24 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        try {
+            firebase.initializeApp(firebaseConfig);
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Error initializing Firebase:', error);
+        }
+        
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Global variables for tracker data
+        // Global variables
         let currentUser = null;
-        let progressData = [];
-        let currentHabit = '';
-        let habitCount = 0;
-        let prayers = {};
-        let schedule = {};
-        let workouts = {
+        let progressData = JSON.parse(localStorage.getItem('progressData')) || [];
+        let currentHabit = localStorage.getItem('currentHabit') || '';
+        let habitCount = parseInt(localStorage.getItem('habitCount')) || 0;
+        let prayers = JSON.parse(localStorage.getItem('prayers')) || {};
+        let schedule = JSON.parse(localStorage.getItem('schedule')) || {};
+        let workouts = JSON.parse(localStorage.getItem('workouts')) || {
             monday: { checked: false, exercises: [''] },
             tuesday: { checked: false, exercises: [''] },
             wednesday: { checked: false, exercises: [''] },
@@ -885,20 +898,21 @@
             { id: 'sunday', label: 'Sunday' }
         ];
 
-        // Check if user is already logged in
-        auth.onAuthStateChanged(async (user) => {
+        // Check auth state
+        auth.onAuthStateChanged((user) => {
+            console.log('Auth state changed:', user ? 'Logged in' : 'Logged out');
             if (user) {
                 currentUser = user;
                 showMainContent(user);
-                await loadUserData(user.uid);
-                initializeTracker();
+                loadUserData(user.uid);
             } else {
                 showAuthContent();
             }
         });
 
-        // Initialize tracker with loaded data
-        function initializeTracker() {
+        // Initialize tracker
+        window.onload = function() {
+            console.log('Page loaded');
             renderWorkoutPlanner();
             loadPrayers();
             loadSchedule();
@@ -906,11 +920,11 @@
             loadTheme();
             loadSleep();
             loadNutrition();
-            updateProgressView();
-        }
+        };
 
         // Authentication Functions
         function switchTab(tab) {
+            console.log('Switching to tab:', tab);
             const loginTab = document.getElementById('login-tab');
             const signupTab = document.getElementById('signup-tab');
             const loginForm = document.getElementById('login-form');
@@ -933,49 +947,58 @@
             message.className = 'message';
         }
 
-        async function handleLogin(event) {
-            event.preventDefault();
-            
+        function handleLogin() {
+            console.log('Login attempted');
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const loginBtn = document.getElementById('login-btn');
-            const message = document.getElementById('message');
+
+            if (!email || !password) {
+                showMessage('Please enter both email and password', 'error');
+                return;
+            }
 
             loginBtn.innerHTML = '<span class="loading-spinner"></span>Logging in...';
             loginBtn.disabled = true;
 
-            try {
-                await auth.signInWithEmailAndPassword(email, password);
-                showMessage('Login successful!', 'success');
-            } catch (error) {
-                let errorMessage = 'Login failed. ';
-                switch (error.code) {
-                    case 'auth/user-not-found':
-                        errorMessage += 'No account found with this email.';
-                        break;
-                    case 'auth/wrong-password':
-                        errorMessage += 'Incorrect password.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage += 'Invalid email address.';
-                        break;
-                    default:
-                        errorMessage += error.message;
-                }
-                showMessage(errorMessage, 'error');
-                loginBtn.innerHTML = 'Login';
-                loginBtn.disabled = false;
-            }
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('Login successful');
+                    showMessage('Login successful!', 'success');
+                })
+                .catch((error) => {
+                    console.error('Login error:', error);
+                    let errorMessage = 'Login failed. ';
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage += 'No account found with this email.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage += 'Incorrect password.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage += 'Invalid email address.';
+                            break;
+                        default:
+                            errorMessage += error.message;
+                    }
+                    showMessage(errorMessage, 'error');
+                    loginBtn.innerHTML = 'Login';
+                    loginBtn.disabled = false;
+                });
         }
 
-        async function handleSignUp(event) {
-            event.preventDefault();
-            
+        function handleSignUp() {
+            console.log('Sign up attempted');
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             const signupBtn = document.getElementById('signup-btn');
-            const message = document.getElementById('message');
+
+            if (!email || !password || !confirmPassword) {
+                showMessage('Please fill in all fields', 'error');
+                return;
+            }
 
             if (password !== confirmPassword) {
                 showMessage('Passwords do not match!', 'error');
@@ -990,51 +1013,53 @@
             signupBtn.innerHTML = '<span class="loading-spinner"></span>Creating account...';
             signupBtn.disabled = true;
 
-            try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                
-                await db.collection('users').doc(userCredential.user.uid).set({
-                    email: email,
-                    createdAt: new Date().toISOString(),
-                    settings: {
-                        theme: 'light'
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('Sign up successful');
+                    return db.collection('users').doc(userCredential.user.uid).set({
+                        email: email,
+                        createdAt: new Date().toISOString(),
+                        settings: {
+                            theme: 'light'
+                        }
+                    });
+                })
+                .then(() => {
+                    showMessage('Account created successfully!', 'success');
+                })
+                .catch((error) => {
+                    console.error('Sign up error:', error);
+                    let errorMessage = 'Sign up failed. ';
+                    switch (error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage += 'This email is already registered.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage += 'Invalid email address.';
+                            break;
+                        case 'auth/weak-password':
+                            errorMessage += 'Password is too weak.';
+                            break;
+                        default:
+                            errorMessage += error.message;
                     }
+                    showMessage(errorMessage, 'error');
+                    signupBtn.innerHTML = 'Create Account';
+                    signupBtn.disabled = false;
                 });
-
-                showMessage('Account created successfully!', 'success');
-            } catch (error) {
-                let errorMessage = 'Sign up failed. ';
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMessage += 'This email is already registered.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage += 'Invalid email address.';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage += 'Password is too weak.';
-                        break;
-                    default:
-                        errorMessage += error.message;
-                }
-                showMessage(errorMessage, 'error');
-                signupBtn.innerHTML = 'Create Account';
-                signupBtn.disabled = false;
-            }
         }
 
-        async function resetPassword(event) {
-            event.preventDefault();
-            
+        function resetPassword() {
             const email = prompt('Please enter your email address:');
             if (!email) return;
 
-            try {
-                await auth.sendPasswordResetEmail(email);
-                showMessage('Password reset email sent! Check your inbox.', 'success');
-            } catch (error) {
-                showMessage('Error sending reset email: ' + error.message, 'error');
-            }
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    showMessage('Password reset email sent! Check your inbox.', 'success');
+                })
+                .catch((error) => {
+                    showMessage('Error sending reset email: ' + error.message, 'error');
+                });
         }
 
         function checkPasswordStrength() {
@@ -1049,7 +1074,6 @@
             }
             
             let strength = 0;
-            
             if (password.length >= 8) strength++;
             if (password.length >= 12) strength++;
             if (/\d/.test(password)) strength++;
@@ -1077,6 +1101,7 @@
             document.getElementById('auth-container').style.display = 'none';
             document.getElementById('main-content').classList.add('show');
             document.getElementById('user-email').textContent = user.email;
+            updateProgressView();
         }
 
         function showAuthContent() {
@@ -1085,45 +1110,53 @@
             document.getElementById('main-content').classList.remove('show');
         }
 
-        async function logout() {
-            try {
-                await auth.signOut();
-                showMessage('Logged out successfully', 'info');
-            } catch (error) {
-                showMessage('Error logging out: ' + error.message, 'error');
-            }
+        function logout() {
+            auth.signOut()
+                .then(() => {
+                    showMessage('Logged out successfully', 'info');
+                })
+                .catch((error) => {
+                    showMessage('Error logging out: ' + error.message, 'error');
+                });
         }
 
         // Data loading from Firestore
         async function loadUserData(userId) {
             try {
-                // Load tracker data
                 const trackerDoc = await db.collection('trackerData').doc(userId).get();
                 if (trackerDoc.exists) {
                     const data = trackerDoc.data();
-                    
-                    // Load all saved data
                     if (data.progressData) progressData = data.progressData;
-                    if (data.currentHabit) currentHabit = data.currentHabit;
-                    if (data.habitCount) habitCount = data.habitCount;
-                    if (data.prayers) prayers = data.prayers;
-                    if (data.schedule) schedule = data.schedule;
-                    if (data.workouts) workouts = data.workouts;
+                    if (data.currentHabit) {
+                        currentHabit = data.currentHabit;
+                        localStorage.setItem('currentHabit', currentHabit);
+                    }
+                    if (data.habitCount) {
+                        habitCount = data.habitCount;
+                        localStorage.setItem('habitCount', habitCount);
+                    }
+                    if (data.prayers) {
+                        prayers = data.prayers;
+                        localStorage.setItem('prayers', JSON.stringify(prayers));
+                    }
+                    if (data.schedule) {
+                        schedule = data.schedule;
+                        localStorage.setItem('schedule', JSON.stringify(schedule));
+                    }
+                    if (data.workouts) {
+                        workouts = data.workouts;
+                        localStorage.setItem('workouts', JSON.stringify(workouts));
+                    }
                     if (data.sleepHours) localStorage.setItem('sleepHours', data.sleepHours);
                     if (data.nutrition) localStorage.setItem('nutrition', data.nutrition);
-                    if (data.theme) {
-                        localStorage.setItem('theme', data.theme);
-                        if (data.theme === 'dark') document.body.classList.add('dark-mode');
-                    }
-                }
-                
-                // Load user settings
-                const userDoc = await db.collection('users').doc(userId).get();
-                if (userDoc.exists) {
-                    const userData = userDoc.data();
-                    if (userData.settings && userData.settings.theme === 'dark') {
-                        document.body.classList.add('dark-mode');
-                    }
+                    
+                    // Reload all data
+                    loadPrayers();
+                    loadSchedule();
+                    loadHabit();
+                    loadSleep();
+                    loadNutrition();
+                    renderWorkoutPlanner();
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
@@ -1131,26 +1164,332 @@
         }
 
         // Save all data to Firestore
-        async function saveAllToCloud() {
-            if (!currentUser) return;
+        function saveAllToCloud() {
+            if (!currentUser) {
+                showMessage('You must be logged in to save to cloud', 'error');
+                return;
+            }
+
+            const dataToSave = {
+                progressData: progressData,
+                currentHabit: currentHabit,
+                habitCount: habitCount,
+                prayers: prayers,
+                schedule: schedule,
+                workouts: workouts,
+                sleepHours: document.getElementById('sleep-hours').value,
+                nutrition: document.querySelector('input[name="nutrition"]:checked')?.value,
+                lastUpdated: new Date().toISOString()
+            };
+
+            db.collection('trackerData').doc(currentUser.uid).set(dataToSave, { merge: true })
+                .then(() => {
+                    showMessage('All data saved to cloud!', 'success');
+                })
+                .catch((error) => {
+                    console.error('Error saving to cloud:', error);
+                    showMessage('Error saving to cloud: ' + error.message, 'error');
+                });
+        }
+
+        // Tracker Functions
+        function showSection(section) {
+            document.getElementById('tracker-section').classList.remove('active');
+            document.getElementById('progress-section').classList.remove('active');
             
-            try {
-                const dataToSave = {
-                    progressData: progressData,
-                    currentHabit: currentHabit,
-                    habitCount: habitCount,
-                    prayers: prayers,
-                    schedule: schedule,
-                    workouts: workouts,
-                    sleepHours: document.getElementById('sleep-hours').value,
-                    nutrition: document.querySelector('input[name="nutrition"]:checked')?.value,
-                    theme: localStorage.getItem('theme'),
-                    lastUpdated: new Date().toISOString()
-                };
+            if (section === 'tracker') {
+                document.getElementById('tracker-section').classList.add('active');
+            } else {
+                document.getElementById('progress-section').classList.add('active');
+                updateProgressView();
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const button = document.querySelector('.theme-toggle');
+            if (document.body.classList.contains('dark-mode')) {
+                button.textContent = 'Switch to Light Mode';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                button.textContent = 'Switch to Dark Mode';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        function loadTheme() {
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.theme-toggle').textContent = 'Switch to Light Mode';
+            }
+        }
+
+        // Prayer functions
+        function savePrayers() {
+            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            prayerIds.forEach(id => {
+                prayers[id] = document.getElementById(id).checked;
+            });
+            localStorage.setItem('prayers', JSON.stringify(prayers));
+        }
+
+        function loadPrayers() {
+            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            prayerIds.forEach(id => {
+                if (prayers[id] !== undefined) {
+                    document.getElementById(id).checked = prayers[id];
+                }
+            });
+        }
+
+        function saveSchedule() {
+            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            prayerIds.forEach(id => {
+                schedule[id] = document.getElementById(id + '-time').value;
+            });
+            localStorage.setItem('schedule', JSON.stringify(schedule));
+        }
+
+        function loadSchedule() {
+            const prayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
+            prayerIds.forEach(id => {
+                if (schedule[id]) {
+                    document.getElementById(id + '-time').value = schedule[id];
+                }
+            });
+        }
+
+        // Workout functions
+        function renderWorkoutPlanner() {
+            const container = document.getElementById('workout-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+
+            daysOfWeek.forEach(day => {
+                const dayData = workouts[day.id] || { checked: false, exercises: [''] };
                 
-                await db.collection('trackerData').doc(currentUser.uid).set(dataToSave, { merge: true });
-                showMessage('All data saved to cloud!', 'success');
-            } catch (error) {
-                console.error('Error saving to cloud:', error);
-                showMessage('Error saving to cloud: ' + error.message, 'error');
-           
+                const card = document.createElement('div');
+                card.className = 'workout-day-card';
+                
+                let exercisesHtml = '';
+                dayData.exercises.forEach((exercise, index) => {
+                    exercisesHtml += `
+                        <div class="exercise-item">
+                            <input type="text" id="${day.id}-exercise-${index}" value="${exercise || ''}" placeholder="e.g., Bench Press 3x10" onchange="updateExercise('${day.id}', ${index}, this.value)">
+                            ${dayData.exercises.length > 1 ? `<button class="remove-exercise-btn" onclick="removeExercise('${day.id}', ${index})">✕</button>` : ''}
+                        </div>
+                    `;
+                });
+                
+                card.innerHTML = `
+                    <div class="workout-day-header">
+                        <input type="checkbox" id="${day.id}" ${dayData.checked ? 'checked' : ''} onchange="toggleWorkoutDay('${day.id}')">
+                        <label for="${day.id}">${day.label}</label>
+                    </div>
+                    <div class="workout-exercises" id="exercises-${day.id}">
+                        ${exercisesHtml}
+                    </div>
+                    <button class="add-exercise-btn" onclick="addExercise('${day.id}')">+ Add Exercise</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleWorkoutDay(dayId) {
+            const checkbox = document.getElementById(dayId);
+            workouts[dayId].checked = checkbox.checked;
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+        }
+
+        function addExercise(dayId) {
+            if (!workouts[dayId].exercises) {
+                workouts[dayId].exercises = [];
+            }
+            workouts[dayId].exercises.push('');
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+            renderWorkoutPlanner();
+        }
+
+        function removeExercise(dayId, index) {
+            workouts[dayId].exercises.splice(index, 1);
+            if (workouts[dayId].exercises.length === 0) {
+                workouts[dayId].exercises = [''];
+            }
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+            renderWorkoutPlanner();
+        }
+
+        function updateExercise(dayId, index, value) {
+            workouts[dayId].exercises[index] = value;
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+        }
+
+        function saveAllWorkouts() {
+            localStorage.setItem('workouts', JSON.stringify(workouts));
+            showMessage('All workouts saved!', 'success');
+        }
+
+        // Habit functions
+        function setHabit() {
+            const habitInput = document.getElementById('bad-habit');
+            if (habitInput.value) {
+                currentHabit = habitInput.value;
+                localStorage.setItem('currentHabit', currentHabit);
+                document.getElementById('habit-name').textContent = `Stopping: ${currentHabit}`;
+                habitInput.value = '';
+                showMessage('Habit set successfully!', 'success');
+            }
+        }
+
+        function incrementHabit() {
+            if (currentHabit) {
+                habitCount++;
+                localStorage.setItem('habitCount', habitCount);
+                document.getElementById('habit-counter').textContent = habitCount;
+            } else {
+                showMessage('Please set a habit first!', 'error');
+            }
+        }
+
+        function resetHabit() {
+            habitCount = 0;
+            localStorage.setItem('habitCount', habitCount);
+            document.getElementById('habit-counter').textContent = habitCount;
+            showMessage('Habit counter reset', 'info');
+        }
+
+        function loadHabit() {
+            if (currentHabit) {
+                document.getElementById('habit-name').textContent = `Stopping: ${currentHabit}`;
+                document.getElementById('habit-counter').textContent = habitCount;
+            }
+        }
+
+        // Sleep and nutrition functions
+        function saveSleep() {
+            const sleepHours = document.getElementById('sleep-hours').value;
+            localStorage.setItem('sleepHours', sleepHours);
+        }
+
+        function loadSleep() {
+            const sleepHours = localStorage.getItem('sleepHours');
+            if (sleepHours) {
+                document.getElementById('sleep-hours').value = sleepHours;
+            }
+        }
+
+        function saveNutrition() {
+            const nutrition = document.querySelector('input[name="nutrition"]:checked');
+            if (nutrition) {
+                localStorage.setItem('nutrition', nutrition.value);
+            }
+        }
+
+        function loadNutrition() {
+            const nutrition = localStorage.getItem('nutrition');
+            if (nutrition) {
+                document.getElementById(`ate-${nutrition}`).checked = true;
+            }
+        }
+
+        // Save daily progress
+        function saveDaily() {
+            const today = new Date().toLocaleDateString();
+            const sleepHours = document.getElementById('sleep-hours').value;
+            const nutrition = document.querySelector('input[name="nutrition"]:checked')?.value;
+            
+            const dailyProgress = {
+                date: today,
+                prayers: {...prayers},
+                workouts: JSON.parse(JSON.stringify(workouts)),
+                habit: {
+                    name: currentHabit,
+                    count: habitCount
+                },
+                sleep: sleepHours,
+                nutrition: nutrition
+            };
+            
+            progressData.push(dailyProgress);
+            localStorage.setItem('progressData', JSON.stringify(progressData));
+            showMessage('Progress saved for ' + today, 'success');
+        }
+
+        // Update progress view
+        function updateProgressView() {
+            const statsDiv = document.getElementById('progress-stats');
+            if (!statsDiv) return;
+            
+            if (progressData.length === 0) {
+                statsDiv.innerHTML = '<p style="text-align: center; padding: 20px;">No progress data yet. Start tracking today!</p>';
+                return;
+            }
+
+            const last7Days = progressData.slice(-7);
+            let statsHTML = '';
+
+            last7Days.forEach(day => {
+                const prayersCompleted = Object.values(day.prayers).filter(Boolean).length;
+                
+                let workoutDays = 0;
+                let workoutDetails = [];
+                if (day.workouts) {
+                    Object.entries(day.workouts).forEach(([dayName, dayData]) => {
+                        if (dayData.checked) {
+                            workoutDays++;
+                            const exercises = dayData.exercises.filter(ex => ex && ex.trim() !== '');
+                            if (exercises.length > 0) {
+                                workoutDetails.push(`
+                                    <div style="margin-top: 10px;">
+                                        <strong>${dayName}:</strong>
+                                        <ul style="margin: 5px 0 5px 20px;">
+                                            ${exercises.map(ex => `<li>${ex}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                `);
+                            }
+                        }
+                    });
+                }
+                
+                statsHTML += `
+                    <div class="stat-card">
+                        <h3>${day.date}</h3>
+                        <div class="stat-value">${prayersCompleted}/5</div>
+                        <div>Prayers Completed</div>
+                        <div style="margin-top: 10px;">Workout Days: ${workoutDays}/7</div>
+                        ${workoutDetails.length > 0 ? `
+                            <div class="workout-details">
+                                <strong>Workout Details:</strong>
+                                ${workoutDetails.join('')}
+                            </div>
+                        ` : ''}
+                        <div style="margin-top: 10px;">Sleep: ${day.sleep || '-'} hours</div>
+                        <div>Ate Well: ${day.nutrition || '-'}</div>
+                        <div style="margin-top: 10px;">Habit streak: ${day.habit?.count || 0} days</div>
+                    </div>
+                `;
+            });
+
+            const totalPrayers = progressData.reduce((sum, day) => 
+                sum + Object.values(day.prayers).filter(Boolean).length, 0);
+            const avgPrayers = (totalPrayers / progressData.length).toFixed(1);
+
+            statsHTML = `
+                <div class="stat-card">
+                    <h3>Overall Stats</h3>
+                    <div class="stat-value">${avgPrayers}/5</div>
+                    <div>Avg. Daily Prayers</div>
+                    <div style="margin-top: 10px;">Days Tracked: ${progressData.length}</div>
+                    <div>Current Habit: ${currentHabit || 'None'}</div>
+                    <div>Habit Streak: ${habitCount} days</div>
+                </div>
+            ` + statsHTML;
+
+            statsDiv.innerHTML = statsHTML;
+        }
+    </script>
+</body>
+</html>
